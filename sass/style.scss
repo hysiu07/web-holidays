@@ -1,0 +1,683 @@
+@use './colors' as *;
+@use './components' as *;
+@use './mixins' as *;
+
+*,
+::after,
+::before {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+	scroll-behavior: smooth;
+}
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.6rem;
+}
+
+// NAV
+
+.burger-btn {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	padding: 1em;
+	border: 1px solid transparent;
+	border-radius: 8px;
+	background: none;
+	cursor: pointer;
+	z-index: 100;
+	&:focus {
+		outline: none;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+	}
+	&:hover {
+		.burger-btn__bars::after,
+		.burger-btn__bars::before {
+			width: 100%;
+		}
+	}
+	&__box {
+		position: relative;
+		width: 40px;
+		height: 30px;
+	}
+	&__bars,
+	&__bars::after,
+	&__bars::before {
+		@include buttonBars;
+	}
+	&__bars {
+		width: 100%;
+		&::after {
+			top: 13px;
+			width: 60%;
+		}
+		&::before {
+			top: 26px;
+			width: 30%;
+			transition-delay: 0.1s;
+		}
+	}
+}
+
+
+.nav {
+	position: fixed;
+	top: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 100vh;
+	transform: translateX(100%);
+	transition: 0.5s;
+	background-image: $blue-gradient-solid;
+	z-index: 90;
+
+	&--active {
+		transform: translate(0);
+	}
+	&__item {
+		position: relative;
+		display: block;
+		color: $pure-white;
+		margin: 0.5em 0;
+		padding: 0.5em 2em;
+		font-size: 2.8rem;
+		text-decoration: none;
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 3px;
+			background-color: $pure-white;
+			transform: scaleY(0);
+			transition: transform 0.3s;
+		}
+		&:hover::before {
+			transform: scaleY(1);
+		}
+	}
+}
+@keyframes navItemAnimation {
+	from {
+		transform: translateX(200%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+.nav-item-animation {
+	animation: navItemAnimation 1s both;
+}
+.black-bars-colors,
+.black-bars-colors::after,
+.black-bars-colors::before {
+	color: $dark;
+}
+
+// HEADER
+
+.header {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding: 2em;
+	height: 75vh;
+
+	text-align: center;
+	color: $pure-white;
+	@include heroImages('../img/header-mini.jpg');
+	background-attachment: scroll;
+	&__heading {
+		font-family: 'Dancing Script', cursive;
+		font-size: 4.8rem;
+		font-weight: 300;
+	}
+	&__text {
+		font-size: 1.4rem;
+	}
+	&__btn {
+		margin-top: 2em;
+		padding: 0.8em 1.6em;
+		font-size: 1.4rem;
+		border: none;
+		border-radius: 8px;
+		background: $pure-white;
+		color: $dark;
+		text-decoration: none;
+		text-transform: uppercase;
+		cursor: pointer;
+
+		&::before {
+			background-color: $light-white;
+		}
+	}
+}
+
+// MAIN
+// DREAMS SECTION
+.dreams {
+	&__box {
+		display: flex;
+		flex-direction: column;
+		margin: 2em 0;
+	}
+	&__img {
+		width: 100%;
+		margin-bottom: 1em;
+	}
+	&__title {
+		margin-bottom: 0.5em;
+	}
+	&__text {
+		font-size: 1.4rem;
+	}
+}
+
+// HERO-IMG
+
+.hero-img {
+	position: relative;
+	padding: 10em 2em;
+	@include heroImages('../img/hero-img-small.jpg');
+	text-align: center;
+	color: $pure-white;
+	overflow: hidden;
+	&__title {
+		font-family: 'Dancing Script', cursive;
+		font-size: 6rem;
+		margin-bottom: 1rem;
+	}
+	&__text {
+		padding: 1em 0;
+	}
+}
+// ISLANDS
+
+.islands {
+	&__card {
+		position: relative;
+		margin: 1em 0;
+		height: 450px;
+
+		color: $pure-white;
+		text-align: center;
+		perspective: 800px;
+		&:hover {
+			.islands__card-img {
+				transform: rotateY(-180deg);
+				opacity: 0;
+			}
+			.islands__card-info {
+				transform: rotateY(0);
+				opacity: 1;
+			}
+		}
+		&-img {
+			padding: 2em;
+			width: 100%;
+			height: 100%;
+
+			border-radius: 8px;
+			background-size: cover;
+			background-position: center;
+			transition: 1s;
+			&--first {
+				background-image: $light-blue-gradient, url('../img/palm.jpg');
+			}
+			&--second {
+				background-image: $blue-gradient, url('../img/boat.jpg');
+			}
+			&--third {
+				background-image: $purple-gradient, url('../img/water.jpg');
+			}
+			&-title {
+				font-family: 'Dancing Script', cursive;
+				font-size: 2.8rem;
+			}
+			&-info {
+				position: absolute;
+				bottom: 30px;
+				right: 30px;
+				font-size: 1.8rem;
+				i {
+					margin-right: 1rem;
+				}
+			}
+		}
+		&-info {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+
+			border-radius: 8px;
+			background-image: $light-blue-gradient-solid;
+			opacity: 0;
+			transform: rotateY(-180deg);
+			transition: 1s;
+
+			&-title {
+				@include examplePosition;
+				top: 1.2em;
+				font-family: 'Dancing Script', cursive;
+				font-size: 2.8rem;
+			}
+			&-list {
+				margin: 0 auto;
+				width: 70%;
+				list-style: none;
+				&-item {
+					padding: 1rem;
+					border-bottom: 1px solid $pure-white;
+					font-size: 1.4rem;
+					&:last-child {
+						border-bottom: none;
+					}
+				}
+			}
+			&-btn {
+				@include examplePosition;
+				bottom: 2em;
+				padding: 1em;
+
+				border-radius: 8px;
+				width: 80%;
+				border: none;
+				background-color: $green-color;
+				cursor: pointer;
+				&::before {
+					background-color: $green-color-hover;
+				}
+			}
+		}
+	}
+}
+
+// OFFERS
+
+.offers {
+	position: relative;
+	@include heroImages('../img/maledivy-small.jpg');
+	overflow: hidden;
+
+	.section-heading {
+		color: $pure-white;
+	}
+	&__option {
+		// display: flex;
+		margin: 4em 2rem;
+		box-shadow: 5px 5px 10px rgba(46, 46, 46, 0.18);
+		background-color: $pure-white;
+		overflow: hidden;
+		&-img {
+			width: 100%;
+			transition: transform 0.3s;
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
+
+		&-info {
+			padding: 2em;
+			text-align: center;
+			&-heading {
+				margin-bottom: 1em;
+				font-size: 2.4rem;
+				font-weight: 300;
+			}
+			&-text {
+				margin-bottom: 1em;
+				font-size: 1.3rem;
+				columns: $dark;
+			}
+			&-btn {
+				margin-top: 1em;
+				padding: 0.8em;
+				width: 100%;
+				color: $pure-white;
+				background-color: $main-color;
+				border-radius: 8px;
+				border: none;
+				cursor: pointer;
+				&::before {
+					background-color: $secondary-color;
+				}
+			}
+		}
+		// img {
+		// 	width: 50%;
+		// }
+	}
+}
+// reviews/////
+
+.reviews {
+	&__box {
+		position: relative;
+		margin: 2em;
+		padding: 2em;
+		border-radius: 8px;
+		box-shadow: 3px 3px 10px #2e2e2e2e;
+		.fas {
+			font-size: 2rem;
+		}
+
+		&-text {
+			padding: 1em;
+		}
+		strong {
+			padding: 1em;
+		}
+
+		img {
+			position: absolute;
+			top: -30px;
+			left: 60%;
+			border-radius: 50%;
+			width: 8rem;
+			height: 8rem;
+		}
+	}
+}
+
+// CONTACT
+.contact {
+	position: relative;
+	background-color: $light-white;
+	overflow: hidden;
+	.white-block-left {
+		background-color: $dark;
+	}
+	&__form {
+		display: flex;
+		flex-direction: column;
+
+		&-input {
+			font-size: 1.7rem;
+			border: none;
+			height: 3rem;
+			border-radius: 5px;
+		}
+		&-label {
+			padding: 0.3em 0;
+			text-transform: uppercase;
+		}
+		&-textarea {
+			max-width: 1200px;
+			font-size: 1.7rem;
+		}
+		&-btn {
+			align-self: flex-end;
+			padding: 0.5em 1em;
+			margin-top: 1em;
+			width: 25%;
+			border: none;
+			border-radius: 5px;
+			font-size: 1.8rem;
+			background-color: $main-color;
+			color: $pure-white;
+			cursor: pointer;
+		}
+	}
+	&__form-top {
+		display: flex;
+		flex-direction: column;
+	}
+}
+// FOOTER>>>
+.footer {
+	padding: 2em;
+	color: $pure-white;
+	background-color: $dark;
+	overflow: hidden;
+	p {
+		font-weight: 300;
+	}
+	&__bottom {
+		text-align: center;
+	}
+
+	li {
+		padding: 0.3em;
+		list-style: none;
+	}
+	hr {
+		position: relative;
+		left: -200px;
+		margin: 1em 0;
+		width: 200%;
+		padding: 0;
+	}
+	.footer__boxes {
+		display: flex;
+		flex-direction: column;
+
+		.footer__box {
+			margin: 3em 0;
+			&-first {
+				max-width: 50%;
+			}
+			&-title {
+				padding-top: 1em;
+				padding-bottom: 0.5em;
+				text-transform: uppercase;
+				font-size: 2rem;
+				i {
+					margin-right: 1em;
+				}
+			}
+			&-icons {
+				display: flex;
+				max-width: 50%;
+				cursor: pointer;
+				i {
+					font-size: 3rem;
+					padding: 1em 0.5em;
+				}
+			}
+		}
+	}
+}
+
+// **********************
+// MEDIA
+// **********************
+@media (min-width: 576px) {
+	.dreams {
+		&__box {
+			flex-direction: row;
+			justify-content: space-between;
+			&-text {
+				width: 55%;
+				&--right {
+					text-align: right;
+				}
+			}
+			&-img {
+				width: 40%;
+				&--right {
+					order: 1;
+				}
+			}
+		}
+		&__img {
+			margin-bottom: 0;
+			max-height: 300px;
+		}
+	}
+	.offers {
+		&__option {
+			display: flex;
+			margin: 2em 0;
+			width: 100%;
+			&-img {
+				width: 50%;
+				height: auto;
+			}
+			&-info {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+			}
+			&-heading {
+				margin-bottom: 0.5em;
+				font-size: 3.6rem;
+			}
+		}
+	}
+
+	// .islands{
+	// 	&__card{
+	// 		width: 60%;
+	// 	}
+	// }
+}
+@media (min-width: 768px) {
+	.white-block {
+		height: 50px;
+		width: 45%;
+	}
+	.header {
+		&__heading {
+			font-size: 6.6rem;
+		}
+		&__text {
+			font-size: 2.2rem;
+		}
+		&__btn {
+			font-size: 1.6rem;
+		}
+	}
+	.dreams {
+		&__text {
+			font-size: 1.8rem;
+		}
+	}
+	.hero-img {
+		padding: 30rem 2rem;
+		hr {
+			margin: 0 auto;
+			width: 70%;
+		}
+		&__title {
+			font-size: 9rem;
+		}
+		&__text {
+			font-size: 2.2rem;
+		}
+	}
+	.islands {
+		&__cards {
+			display: flex;
+			justify-content: center;
+			flex: wrap;
+		}
+		&__card {
+			margin: 1em;
+			width: 45%;
+		}
+	}
+	.footer {
+		.footer__boxes {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-around;
+		}
+	}
+}
+
+@media (min-width: 992px) {
+	.burger-btn {
+		top: 40px;
+		right: 40px;
+	}
+	.header {
+		background-image: $blue-gradient, url('../img/header-big.jpg');
+		&__heading {
+			font-size: 10rem;
+		}
+		&__text {
+			font-size: 2.6rem;
+		}
+	}
+	.nav {
+		&__item {
+			font-size: 4.8rem;
+		}
+	}
+	.dreams {
+		&__box {
+			margin: 5em 0;
+			&-text {
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-end;
+				margin-bottom: 2.5em;
+			}
+			&-text {
+				font-size: 2.2rem;
+			}
+		}
+		&__title {
+			font-size: 3rem;
+		}
+	}
+	.hero-img {
+		padding: 40rem 2em;
+		background-image: $blue-gradient, url('../img/hero-img-big.jpg');
+		&__title {
+			font-size: 8rem;
+		}
+		&__text {
+			font-size: 2.5rem;
+		}
+	}
+	.islands {
+		&__cards {
+			display: flex;
+			justify-content: center;
+			flex: wrap;
+		}
+		&__card {
+			margin: 1em;
+			width: 45%;
+		}
+	}
+	.offers {
+		background-image: $blue-gradient, url('../img/maledivy-big.jpg');
+		&__option {
+			&-img {
+				object-fit: cover;
+				height: 300px;
+			}
+			&-info-title {
+				font-size: 2rem;
+			}
+			&-info-text {
+				font-size: 1.5rem;
+			}
+		}
+	}
+}
+@media (min-width: 1100px) {
+	.islands {
+		&__card {
+			width: 30%;
+		}
+	}
+}
